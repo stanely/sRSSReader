@@ -14,33 +14,42 @@ public class XmlHandler extends DefaultHandler {
     private ArrayList<RSSItemField> itemList;
     private RSSItemField item;
     
-    public void startElement(String namespaceURI, String localName, String qName, Attributes atts) throws SAXException {
-        
+
+    @Override
+    public void startElement(String uri, String localName, String qName,
+            org.xml.sax.Attributes attributes) throws SAXException {
+        // TODO Auto-generated method stub
+
         buffer.setLength(0);
         
-        //if(localName.equals("channel")) {
-        if(localName.equals("title")) {
+        if(localName.equals("channel")) {
             itemList = new ArrayList<RSSItemField>();
         }
         
-        if(localName.equals("item")) {
+        //if(localName.equals("item")) {
+        if(localName.equals("title")) {
             item = new RSSItemField();
         }
-        
         
     }
     
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
-        
-        if(itemList == null && item == null) {  // allocate resource
+        /*
+        if(itemList == null) {
             itemList = new ArrayList<RSSItemField>();
+        }
+        
+        if(item == null) {  // allocate resource
             item = new RSSItemField();
         }
+        */
         
         if(localName.equals("item")) {
             itemList.add(item);
+            item = null;
         } 
+        
 
         if(localName.equals("guid")) {
             item.guid = removeEnter(buffer.toString());
@@ -77,6 +86,7 @@ public class XmlHandler extends DefaultHandler {
     
     // the data contains "\n" we have to remove them.
     private String removeEnter(String in) {
-        return in.replaceAll("[\n]", "");        
+        return in;
+        //return in.replaceAll("[\n]", "");        
     }
 }

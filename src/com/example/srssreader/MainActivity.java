@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import org.apache.http.*;
 import org.apache.http.client.ClientProtocolException;
@@ -22,6 +23,8 @@ import com.example.rssfeeditem.*;
 
 public class MainActivity extends Activity {
     Button btn;
+    TextView text;
+    
     //String xmlURL = "http://www.wretch.cc/blog/stanely5&rss20=1";
     String xmlURL = "http://rss.cnn.com/rss/edition_asia.rss";
     private ArrayList<RSSItemField> item;
@@ -32,6 +35,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         
         btn = (Button) findViewById(R.id.go);
+        text = (TextView) findViewById(R.id.text);
         
         btn.setOnClickListener(new Button.OnClickListener() {
 
@@ -57,7 +61,7 @@ public class MainActivity extends Activity {
                     } else
                         Log.d("stanely", "response == null");
                     
-                    content = EntityUtils.toString(response.getEntity());  // get xml file now
+                    content += EntityUtils.toString(response.getEntity());  // get xml file now
                     
                     // parsing
                     XmlParser p = new XmlParser();
@@ -76,6 +80,13 @@ public class MainActivity extends Activity {
                 
                 finally {
                     hc.getConnectionManager().shutdown();
+                    
+                    text.setText(new String("Count:" + item.size()));
+                    
+                    for(int i = 0; i < item.size(); i++) {
+                        Log.d("stanely", item.get(i).title);
+                    }
+                    
                 }
                 
             }
