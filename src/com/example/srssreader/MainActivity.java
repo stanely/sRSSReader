@@ -2,6 +2,7 @@ package com.example.srssreader;
 
 import java.io.IOException;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.util.Log;
@@ -79,4 +80,14 @@ public class MainActivity extends Activity {
         return true;
     }
 
+}
+
+class RetrieveFeedAsync extends AsyncTask<String, Void, String> {
+
+	@Override
+	protected String doInBackground(String... params) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 }
