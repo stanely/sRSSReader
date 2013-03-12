@@ -22,7 +22,8 @@ import com.example.rssfeeditem.*;
 
 public class MainActivity extends Activity {
     Button btn;
-    String xmlURL = "http://www.wretch.cc/blog/stanely5&rss20=1";
+    //String xmlURL = "http://www.wretch.cc/blog/stanely5&rss20=1";
+    String xmlURL = "http://rss.cnn.com/rss/edition_asia.rss";
     private ArrayList<RSSItemField> item;
     
     @Override

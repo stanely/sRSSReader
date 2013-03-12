@@ -32,44 +32,38 @@ public class XmlHandler extends DefaultHandler {
     
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
-
+        
+        if(itemList == null && item == null) {  // allocate resource
+            itemList = new ArrayList<RSSItemField>();
+            item = new RSSItemField();
+        }
+        
         if(localName.equals("item")) {
             itemList.add(item);
         } 
 
         if(localName.equals("guid")) {
-            item.guid = buffer.toString();
+            item.guid = removeEnter(buffer.toString());
         }
         
         if(localName.equals("title")) {  // first
-            if(itemList == null && item == null) {
-                itemList = new ArrayList<RSSItemField>();
-                item = new RSSItemField();
-            } else {
-                item.title = buffer.toString();
-            }
-
+            item.title = removeEnter(buffer.toString());
         }        
         
         if(localName.equals("link")) {
-            item.link = buffer.toString();
+            item.link = removeEnter(buffer.toString());
         }
         
         if(localName.equals("category")) {
-            item.category = buffer.toString();
+            item.category = removeEnter(buffer.toString());
         }   
         
         if(localName.equals("pubDate")) {
-            item.pubDate = buffer.toString();
+            item.pubDate = removeEnter(buffer.toString());
         }        
         
         if(localName.equals("description")) {
-            try {
-                item.description = new String(buffer.toString().getBytes(), "utf-8");
-            } catch (UnsupportedEncodingException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+            item.description = removeEnter(buffer.toString());
         }        
     }
     
@@ -81,4 +75,8 @@ public class XmlHandler extends DefaultHandler {
         return itemList;
     }
     
+    // the data contains "\n" we have to remove them.
+    private String removeEnter(String in) {
+        return in.replaceAll("[\n]", "");        
+    }
 }
