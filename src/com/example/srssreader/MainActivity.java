@@ -19,6 +19,7 @@ import org.apache.http.util.EntityUtils;
 
 public class MainActivity extends Activity {
     Button btn;
+    String xmlURL = "http://www.wretch.cc/blog/stanely5&rss20=1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,14 +44,15 @@ public class MainActivity extends Activity {
                 
                 try {
                     //HttpPost httppost = new HttpPost("http://www.wretch.cc/blog/stanely5&rss20=1");
-                    HttpGet httpget = new HttpGet("http://www.wretch.cc/blog/stanely5&rss20=1");
+                    HttpGet httpget = new HttpGet(xmlURL);
                     response = hc.execute(httpget);
+                    
                     if(response != null) {
                         Log.d("stanely", "response != null");
                     } else
                         Log.d("stanely", "response == null");
                     
-                    content += EntityUtils.toString(response.getEntity());
+                    content += EntityUtils.toString(response.getEntity());  // get xml file now
                 }
                 
                 catch (ClientProtocolException ex) {
