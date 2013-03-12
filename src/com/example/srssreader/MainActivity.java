@@ -1,6 +1,7 @@
 package com.example.srssreader;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -17,10 +18,13 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
+import com.example.rssfeeditem.*;
+
 public class MainActivity extends Activity {
     Button btn;
     String xmlURL = "http://www.wretch.cc/blog/stanely5&rss20=1";
-
+    private ArrayList<RSSItemField> item;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +56,13 @@ public class MainActivity extends Activity {
                     } else
                         Log.d("stanely", "response == null");
                     
-                    content += EntityUtils.toString(response.getEntity());  // get xml file now
+                    content = EntityUtils.toString(response.getEntity());  // get xml file now
+                    
+                    // parsing
+                    XmlParser p = new XmlParser();
+                    item = p.parseXmlResponse(content);
+                    
+                    Log.d("stanely", "Ending!!!");
                 }
                 
                 catch (ClientProtocolException ex) {
