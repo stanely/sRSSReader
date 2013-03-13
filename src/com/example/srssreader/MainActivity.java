@@ -134,9 +134,7 @@ public class MainActivity extends Activity {
             
             finally {
                 hc.getConnectionManager().shutdown();
-                
-                //text.setText(new String("Count:" + item.size()));  // TODO: Will crash, check later.
-                
+           
                 for(int i = 0; i < item.size(); i++) {
                     Log.d("stanely", item.get(i).title);
                 }
@@ -149,7 +147,9 @@ public class MainActivity extends Activity {
         @Override
         protected void onPostExecute(String result) {
             // TODO Auto-generated method stub
-            super.onPostExecute(result);    
+            super.onPostExecute(result);  
+          
+            text.setText(new String("Count:" + item.size()));  // TODO: Will crash, check later.            
         }
     
         @Override

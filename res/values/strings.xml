@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">sRSSReader</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="hello_world">Count:0</string>
     <string name="menu_settings">Settings</string>
     <string name="go">Get RSS</string>
     <string name="show">Show RSS</string>
