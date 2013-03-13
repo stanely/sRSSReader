@@ -9,13 +9,17 @@ import java.util.Map;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.apache.http.*;
 import org.apache.http.client.ClientProtocolException;
@@ -44,6 +48,7 @@ public class MainActivity extends Activity {
         btn = (Button) findViewById(R.id.go);
         show = (Button) findViewById(R.id.show);
         text = (TextView) findViewById(R.id.text);
+        listView = (ListView) findViewById(R.id.rsslist);        
         
         btn.setOnClickListener(new Button.OnClickListener() {
 
@@ -63,6 +68,27 @@ public class MainActivity extends Activity {
             }
             
         });
+        
+        // respond to the user selection.
+        listView.setOnItemClickListener(new OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int index,
+                    long arg3) {
+                // TODO Auto-generated method stub
+                Toast.makeText(getApplicationContext(), Integer.toString(index), Toast.LENGTH_SHORT).show();
+                RSSItemField tmp_item = item.get(index);
+                    
+                // start another activity
+                Intent it = new Intent();
+                it.setClass(getApplicationContext(), DetailActivity.class);
+                it.putExtra("title", tmp_item.title);
+                it.putExtra("description", tmp_item.description);
+                
+                startActivity(it);
+            }
+            
+        });        
         
     }         
 
@@ -88,11 +114,11 @@ public class MainActivity extends Activity {
             list.add(map);
         }
         
-        listView = (ListView) findViewById(R.id.rsslist);
         SimpleAdapter adapter = new SimpleAdapter (this, list, R.layout.rss_list, new String[] {"Index", "Title"},  
                 new int[] {R.id.textViewIndex, R.id.textViewTitle});
         
-        listView.setAdapter(adapter); 	    
+        listView.setAdapter(adapter);
+      
 	}
 
 
